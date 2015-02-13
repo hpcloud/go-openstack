@@ -1,4 +1,3 @@
-// image.go
 package image
 
 import (
@@ -21,12 +20,12 @@ type imagesDetailResp struct {
 }
 
 type Image struct {
-	Id              string `json:"id"`
-	Name            string `json:"name"`
-	ContainerFormat string `json:"container_format"`
-	DiskFormat      string `json:"disk_format"`
-	CheckSum        string `json:"checksum"`
-	Size            int    `json:"size"`
+	Id   string `json:"id,omitempty"`
+	Name string `json:"name,omitempty"`
+	//ContainerFormat string `json:"container_format,omitempty"`
+	//DiskFormat      string `json:"disk_format,omitempty"`
+	//CheckSum        string `json:"checksum,omitempty"`
+	//Size            int    `json:"size,omitempty"`
 }
 
 type ImageDetail struct {
@@ -53,23 +52,21 @@ func GetImages(url string, token identity.Token) (images []Image, err error) {
 
 	req := gorequest.New()
 
-	resp, body, errs := req.Get(url+"/images").
+	_, body, errs := req.Get(url+"/images").
 		Set("Content-Type", "application/json").
 		Set("Accept", "application/json").
 		Set("X-Auth-Token", token.Id).
 		End()
 
-	if err = openstack.CheckHttpResponseStatusCode(resp.StatusCode); err != nil {
-		return
-	}
-
 	if errs != nil {
 		err = errs[len(errs)-1]
+		fmt.Println("err1", err)
 		return
 	}
 
 	var r = imagesResp{}
 	if err = json.Unmarshal([]byte(body), &r); err != nil {
+		fmt.Println("err2", err)
 		return
 	}
 
@@ -92,15 +89,11 @@ func GetImage(auth identity.Auth, name string) (image Image, err error) {
 		auth.EndpointList["image"],
 		name)
 
-	resp, body, errs := req.Get(url).
+	_, body, errs := req.Get(url).
 		Set("Content-Type", "application/json").
 		Set("Accept", "application/json").
 		Set("X-Auth-Token", auth.Access.Token.Id).
 		End()
-
-	if err = openstack.CheckHttpResponseStatusCode(resp.StatusCode); err != nil {
-		return
-	}
 
 	if errs != nil {
 		err = errs[len(errs)-1]

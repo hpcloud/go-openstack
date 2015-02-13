@@ -1,4 +1,3 @@
-// network.go
 package network
 
 import (

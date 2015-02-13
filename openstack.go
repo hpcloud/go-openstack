@@ -1,4 +1,3 @@
-// openstack.go
 package openstack
 
 import (

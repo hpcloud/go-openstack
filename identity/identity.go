@@ -1,4 +1,3 @@
-// identity.go
 package identity
 
 import (
@@ -20,7 +19,7 @@ type AuthenticateReq struct {
 	TenantName          string              `json:"tenantName,omitempty"`
 	TenantId            string              `json:"tenantId,omitempty"`
 	PasswordCredentials PasswordCredentials `json:"passwordCredentials,omitempty"`
-	TokenCredentials    TokenCredentials    `json:"token,omitempty"`
+	//TokenCredentials    TokenCredentials    `json:"token,omitempty"`
 }
 
 type PasswordCredentials struct {
@@ -93,10 +92,10 @@ func Authenticate(openStackConfig openstack.OpenStackConfig) (auth Auth, err err
 
 	authReq := AuthenticationReq{}
 
-	if len(openStackConfig.TenantName) > 0 {
-		authReq.Auth.TenantName = openStackConfig.TenantName
-	} else if len(openStackConfig.TenantId) > 0 {
+	if len(openStackConfig.TenantId) > 0 {
 		authReq.Auth.TenantId = openStackConfig.TenantId
+	} else if len(openStackConfig.TenantName) > 0 {
+		authReq.Auth.TenantName = openStackConfig.TenantName
 	}
 
 	authReq.Auth.PasswordCredentials = PasswordCredentials{openStackConfig.Username, openStackConfig.Password}
