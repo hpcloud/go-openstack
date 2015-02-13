@@ -1,4 +1,3 @@
-// keypair.go
 package compute
 
 import (

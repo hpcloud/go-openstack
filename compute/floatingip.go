@@ -1,4 +1,3 @@
-// floatingip.go
 package compute
 
 import (
@@ -66,7 +65,7 @@ func CreateFloatingIP(auth identity.Auth) (floatingIP FloatingIP, err error) {
 	url := fmt.Sprintf("%s/os-floating-ips",
 		auth.EndpointList["compute"])
 
-	var reqBody = `{"pool": null}`
+	var reqBody = `{"pool": "Ext-Net"}`
 
 	resp, body, errs := req.Post(url+"/os-floating-ips").
 		Set("Content-Type", "application/json").

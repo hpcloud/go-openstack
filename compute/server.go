@@ -1,4 +1,3 @@
-// server.go
 package compute
 
 import (
@@ -260,7 +259,7 @@ func ServerAction(auth identity.Auth, id string, action string, key string, valu
 
 	var reqBody = fmt.Sprintf(`
 	{
-		"%s": 
+		"%s":
 		{
 			"%s": "%s"
 		}

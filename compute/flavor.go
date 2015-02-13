@@ -1,4 +1,3 @@
-// flavor.go
 package compute
 
 import (

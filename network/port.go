@@ -1,4 +1,3 @@
-// port.go
 package network
 
 import (

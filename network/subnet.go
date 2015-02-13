@@ -1,4 +1,3 @@
-// subnet.go
 package network
 
 import (
@@ -10,26 +9,26 @@ import (
 )
 
 type subnetsResp struct {
-	Subnets []Subnet `json:"subnets"`
+	Subnets []Subnet `json:"subnets,omitempty"`
 }
 
 type Subnet struct {
-	Id              string           `json:"id"`
-	Name            string           `json:"name"`
-	NetworkId       string           `json:"network_id"`
-	TenantId        string           `json:"tenant_id"`
-	EnableDHCP      bool             `json:"enable_dhcp"`
-	DnsNameserver   []string         `json:"dns_nameservers"`
-	AllocationPools []AllocationPool `json:"allocation_pools"`
-	HostRoutes      []string         `json:"host_routes"`
-	IPVersion       int              `json:"ip_version"`
-	GatewayIP       string           `json:"gateway_ip"`
-	CIDR            string           `json:"cidr"`
+	Id         string `json:"id,omitempty"`
+	Name       string `json:"name,omitempty"`
+	NetworkId  string `json:"network_id,omitempty"`
+	TenantId   string `json:"tenant_id,omitempty"`
+	EnableDHCP bool   `json:"enable_dhcp,omitempty"`
+	//DnsNameserver   []string         `json:"dns_nameservers,omitempty"`
+	//AllocationPools []AllocationPool `json:"allocation_pools,omitempty"`
+	//HostRoutes      []string         `json:"host_routes,omitempty"`
+	IPVersion int    `json:"ip_version,omitempty"`
+	GatewayIP string `json:"gateway_ip,omitempty"`
+	CIDR      string `json:"cidr,omitempty"`
 }
 
 type AllocationPool struct {
-	Start string `json:"start"`
-	End   string `json:"end"`
+	Start string `json:"start,omitempty"`
+	End   string `json:"end,omitempty"`
 }
 
 func GetSubnets(auth identity.Auth) (subnets []Subnet, err error) {
@@ -52,6 +51,7 @@ func GetSubnets(auth identity.Auth) (subnets []Subnet, err error) {
 
 	var sn = subnetsResp{}
 	if err = json.Unmarshal([]byte(body), &sn); err != nil {
+		fmt.Println(err)
 		return
 	}
 
